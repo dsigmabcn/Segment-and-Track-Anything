@@ -632,7 +632,10 @@ def seg_track_app():
                         # with tab_show_res:
                             output_res = gr.Image(label='Segment result of all frames').style(height=550)
                             try: 
-                              total_frames_num = len(output_masked_frame_path)
+                                tracking_result_dir = f'{os.path.join(os.path.dirname(__file__), "tracking_results", f"{video_name}")}'
+                                output_masked_frame_dir = f'{tracking_result_dir}/{video_name}_masked_frames'
+                                output_masked_frame_path = sorted([os.path.join(output_masked_frame_dir, img_name) for img_name in os.listdir(output_masked_frame_dir)])
+                                total_frames_num = len(output_masked_frame_path)
                             except NameError:
                               total_frames_num = 500
                             frame_per = gr.Slider(
@@ -645,6 +648,7 @@ def seg_track_app():
                                 step = 1,
                                 value= 1.0,
                             )
+                            
                             frame_per.release(show_res_by_slider, inputs=[input_video, input_img_seq, frame_per], outputs=[output_res, frame_num])
                             roll_back_button = gr.Button(value="Choose this mask to refine")
                             refine_res = gr.Image(label='Refine masks').style(height=550)\
