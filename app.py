@@ -631,13 +631,16 @@ def seg_track_app():
                         # tab_show_res = gr.Tab(label="Segment result of all frames")
                         # with tab_show_res:
                             output_res = gr.Image(label='Segment result of all frames').style(height=550)
-                            total_frames_num = len(output_masked_frame_path)
+                            try: 
+                              total_frames_num = len(output_masked_frame_path)
+                            except NameError:
+                              total_frames_num = 500
                             frame_per = gr.Slider(
                                 label = "Frame number",
                                 #minimum= 0.0,
-                                minimum = 1.0
+                                minimum = 1.0,
                                 #maximum= 100.0,
-                                maximum = total_frames_num
+                                maximum = total_frames_num,
                                 #step=0.01,
                                 step = 1,
                                 value= 1.0,
